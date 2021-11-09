@@ -8,3 +8,11 @@ class AuthorPermission(permissions.BasePermission):
             request.method in permissions.SAFE_METHODS
             or obj.author == request.user
         )
+
+
+class FollowPermission(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+        return (
+            obj.user == request.user
+        )

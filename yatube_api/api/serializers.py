@@ -9,7 +9,6 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model = Post
-        extra_kwargs = {'text': {'required': True}}
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -37,4 +36,3 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model = Comment
-        extra_kwargs = {'text': {'required': True}}
