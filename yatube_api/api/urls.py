@@ -18,7 +18,8 @@ urlpatterns = [
          name='token_obtain_pair'),
     path('v1/jwt/refresh/', jwt_views.TokenRefreshView.as_view(),
          name='token_refresh'),
-    path('v1/jwt/verify/', jwt_views.TokenVerifyView.as_view(), name='token_verify'),
+    path('v1/jwt/verify/', jwt_views.TokenVerifyView.as_view(),
+         name='token_verify'),
     path('v1/', include(router.urls)),
     path('v1/posts/<int:post_id>/', include(router1.urls)),
 

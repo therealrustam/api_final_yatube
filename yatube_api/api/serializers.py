@@ -25,8 +25,6 @@ class FollowingSerializer(serializers.ModelSerializer):
 
 
 class FollowSerializer(serializers.ModelSerializer):
-   # user = serializers.SlugRelatedField(
-    #    read_only=True, required=False, slug_field='username')
     user = FollowingSerializer(required=False)
     following = FollowingSerializer(required=True)
 
