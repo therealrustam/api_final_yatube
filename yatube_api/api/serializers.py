@@ -1,7 +1,8 @@
-from posts.models import Comment, Follow, Group, Post, User
 from rest_framework import serializers
-from rest_framework.generics import get_object_or_404
 from rest_framework.relations import SlugRelatedField
+from rest_framework.validators import UniqueTogetherValidator
+
+from posts.models import Comment, Follow, Group, Post, User
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -19,26 +20,27 @@ class GroupSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class FollowingSerializer(serializers.ModelSerializer):
-    def to_representation(self, value):
-        return value.username
-
-
 class FollowSerializer(serializers.ModelSerializer):
-    user = FollowingSerializer(required=False)
-    following = FollowingSerializer(required=True)
+    user = serializers.SlugRelatedField(
+        slug_field='username',
+        queryset=User.objects.all(),
+        default=serializers.CurrentUserDefault())
+
+    following = serializers.SlugRelatedField(
+        slug_field='username',
+        queryset=User.objects.all())
 
     class Meta:
         model = Follow
-        fields = ('user', 'following',)
+        fields = '__all__'
+        validators = [UniqueTogetherValidator(
+            queryset=Follow.objects.all(),
+            fields=['user', 'following']), ]
 
-    def create(self, validated_data):
-        following = validated_data.pop('following')
-        following = get_object_or_404(User, username=following)
-        follow = Follow.objects.create(
-            following=following, user=self.request.user, **validated_data)
-        follow.save()
-        return follow
+    def validate(self, data):
+        if data['user'] == data['following']:
+            raise serializers.ValidationError()
+        return data
 
 
 class CommentSerializer(serializers.ModelSerializer):

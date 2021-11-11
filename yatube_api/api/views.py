@@ -1,4 +1,3 @@
-from posts.models import Comment, Follow, Group, Post
 from rest_framework import filters, viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.pagination import LimitOffsetPagination
@@ -8,6 +7,8 @@ from rest_framework.permissions import (IsAuthenticated,
 from .permissions import AuthorPermission
 from .serializers import (CommentSerializer, FollowSerializer, GroupSerializer,
                           PostSerializer)
+
+from posts.models import Comment, Follow, Group, Post
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -35,9 +36,7 @@ class FollowViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'post']
 
     def get_queryset(self):
-        user = self.request.user
-        new_queryset = Follow.objects.filter(user=user)
-        return new_queryset
+        return self.request.user.follower.all()
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
