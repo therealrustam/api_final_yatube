@@ -10,8 +10,8 @@ router1 = DefaultRouter()
 
 router.register('posts', PostViewSet)
 router.register('groups', GroupViewSet)
-router.register('follow', FollowViewSet)
-router1.register('comments', CommentViewSet)
+router.register('follow', FollowViewSet, basename='follow')
+router1.register('comments', CommentViewSet, basename='comments')
 
 urlpatterns = [
     path('v1/jwt/create/', jwt_views.TokenObtainPairView.as_view(),
@@ -22,5 +22,4 @@ urlpatterns = [
          name='token_verify'),
     path('v1/', include(router.urls)),
     path('v1/posts/<int:post_id>/', include(router1.urls)),
-
 ]
