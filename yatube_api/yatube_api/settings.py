@@ -1,3 +1,6 @@
+"""
+Параметры yatube_api.
+"""
 import os
 
 

@@ -1,3 +1,7 @@
+"""
+Модели постов, сообществ,
+комментариев, подписок.
+"""
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -5,6 +9,9 @@ User = get_user_model()
 
 
 class Group(models.Model):
+    """
+    Модель сообществ.
+    """
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     description = models.TextField()
@@ -14,6 +21,9 @@ class Group(models.Model):
 
 
 class Post(models.Model):
+    """
+    Модель постов.
+    """
     text = models.TextField()
     pub_date = models.DateTimeField('Дата публикации', auto_now_add=True)
     author = models.ForeignKey(
@@ -33,6 +43,9 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
+    """
+    Модель комментариев.
+    """
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='comments')
     post = models.ForeignKey(
@@ -43,6 +56,9 @@ class Comment(models.Model):
 
 
 class Follow(models.Model):
+    """
+    Модель подписок.
+    """
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

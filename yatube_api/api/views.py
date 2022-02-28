@@ -1,3 +1,7 @@
+"""
+Вьюсеты постов, сообществ,
+подписок и комментариев.
+"""
 from rest_framework import filters, viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.pagination import LimitOffsetPagination
@@ -12,6 +16,9 @@ from posts.models import Comment, Group, Post
 
 
 class PostViewSet(viewsets.ModelViewSet):
+    """
+    Класс вьюсет постов.
+    """
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [AuthorPermission, IsAuthenticatedOrReadOnly]
@@ -22,12 +29,18 @@ class PostViewSet(viewsets.ModelViewSet):
 
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    Класс вьюсет постов сообществ.
+    """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class FollowViewSet(viewsets.ModelViewSet):
+    """
+    Класс вьюсет подписок.
+    """
     serializer_class = FollowSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = (filters.SearchFilter, )
@@ -42,6 +55,9 @@ class FollowViewSet(viewsets.ModelViewSet):
 
 
 class CommentViewSet(viewsets.ModelViewSet):
+    """
+    Класс вьюсет комментариев.
+    """
     serializer_class = CommentSerializer
     permission_classes = [AuthorPermission, IsAuthenticatedOrReadOnly]
 

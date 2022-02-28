@@ -1,3 +1,6 @@
+"""
+Параметры сериализаторов для моделей.
+"""
 from rest_framework import serializers
 from rest_framework.relations import SlugRelatedField
 from rest_framework.validators import UniqueTogetherValidator
@@ -6,6 +9,9 @@ from posts.models import Comment, Follow, Group, Post, User
 
 
 class PostSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор модели постов.
+    """
     author = SlugRelatedField(slug_field='username', read_only=True)
 
     class Meta:
@@ -14,6 +20,9 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class GroupSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор модели сообщества.
+    """
 
     class Meta:
         model = Group
@@ -21,6 +30,9 @@ class GroupSerializer(serializers.ModelSerializer):
 
 
 class FollowSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор модели подписок.
+    """
     user = serializers.SlugRelatedField(
         slug_field='username',
         queryset=User.objects.all(),
@@ -46,6 +58,9 @@ class FollowSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор модели комментариев.
+    """
     author = serializers.SlugRelatedField(
         read_only=True, slug_field='username'
     )
