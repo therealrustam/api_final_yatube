@@ -1,5 +1,5 @@
 """
-Маршрутизатор основной.
+Маршрутизатор yatube_api.
 """
 from django.contrib import admin
 from django.urls import include, path
